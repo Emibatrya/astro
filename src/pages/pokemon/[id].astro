@@ -26,7 +26,7 @@ const { url,name } = Astro.props
 
 const audioSrc = `https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/${ id }.ogg`
 ---
-<MainLayout title="Algún pokémon">
+<MainLayout title={`Pokémon - #${id} ${name}`}>
     <section class="mt-10 mx-10 flex flex-col justify-center items-center">
         <div>
             <a href="/">Regresar</a>
