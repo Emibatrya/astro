@@ -9,13 +9,13 @@ import MainLayout from "../../layouts/MainLayout.astro";
 import Title from "../../components/shared/Title.astro";
 
 export const getStaticPaths = (async () => {
-  const resp = await fetch("https://pokeapi.co/api/v2/pokemon?limit=151");
-  const { results } = (await resp.json()) as PokemonListResponse;
+    const resp = await fetch("https://pokeapi.co/api/v2/pokemon?limit=151");
+    const { results } = (await resp.json()) as PokemonListResponse;
 
-  return results.map(({ name, url }) => ({
-    params: { name: name },
-    props: { name: name, url: url },
-  }));
+    return results.map(({ name, url }) => ({
+        params: { name: name },
+        props: { name: name, url: url },
+    }));
 }) satisfies GetStaticPaths;
 
 const { name } = Astro.params;
@@ -27,41 +27,67 @@ const imageSrc = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprit
 ---
 
 <MainLayout
-  title={`Pokémon - #${id} ${name}`}
-  description={`Información sobre el pokémon ${name}`}
-  image={imageSrc}
+    title={`Pokémon - #${id} ${name}`}
+    description={`Información sobre el pokémon ${name}`}
+    image={imageSrc}
 >
-  <section class="mt-10 mx-10 flex flex-col justify-center items-center">
-    <div class="flex flex-row">
-      <div>
-        <button onclick="history.back()" class="text-blue-500 hover:underline">
-          Regresar
-        </button>
-        <Title>{name}</Title>
-      </div>
+    <section class="mt-10 mx-10 flex flex-col justify-center items-center">
+        <div class="flex flex-row">
+            <div>
+                <button
+                    onclick="history.back()"
+                    class="text-blue-500 hover:underline"
+                >
+                    Regresar
+                </button>
+                <Title>{name}</Title>
+            </div>
 
-      <button
-        id="btn-favorite"
-        class="ml-4 text-red-500 cursor-pointer bg-transparent border-0 p-0"
-      >
-        <Icon name="heart-outline" size={50} />
-        <Icon class="hidden" name="heart-full" size={50} />
-      </button>
-    </div>
+            <button
+                id="btn-favorite "
+                class="ml-4"
+                data-name={name}
+                data-id={id}
+            >
+                <Icon name="heart-outline" size={50} />
+                <Icon class="hidden" name="heart-full" size={50} />
+            </button>
+        </div>
 
-    <PokemonCard name={name} url={url} isBig />
+        <PokemonCard name={name} url={url} isBig />
 
-    <audio controls class="mt-5">
-      <source src={audioSrc} type="audio/ogg" />
-      Your browser does not support the audio element.
-    </audio>
-  </section>
+        <audio controls class="mt-5">
+            <source src={audioSrc} type="audio/ogg" />
+            Your browser does not support the audio element.
+        </audio>
+    </section>
 </MainLayout>
 
-<style>
-  @reference "../../styles/global.css";
+<script>
+    interface FavoritePokemon {
+        name: string;
+        id: number;
+    }
+    const handlePageLoad = () => {
+        const btnFavorite = document.querySelector(
+            "#btn-favorite",
+        ) as HTMLButtonElement;
 
-  #btn-favorite {
-    @apply hover:animate-pulse;
-  }
+        if (!btnFavorite) return;
+
+        const name = btnFavorite.dataset.name;
+        const id = btnFavorite.dataset.id;
+
+        btnFavorite.addEventListener("click", () => {});
+    };
+
+    document.addEventListener("astro:page-load", handlePageLoad);
+</script>
+
+<style>
+    @reference "../../styles/global.css";
+
+    #btn-favorite {
+        @apply hover:animate-pulse;
+    }
 </style>
