@@ -3,3 +3,4 @@ allowBuilds:
   sharp: true
 minimumReleaseAgeExclude:
   - astro@7.3.5
+  - '@astrojs/solid-js@7.1.1'
