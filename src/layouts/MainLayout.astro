@@ -1,16 +1,16 @@
 ---
-interface Props {
-	title?: string;
-	image?: string;
-	description?: string
-}
-
-const { title = siteInfo.title,description = siteInfo.description, image, } = 
-Astro.props;
 import { ClientRouter } from 'astro:transitions';
 import '../styles/global.css';
 import { siteInfo } from '../consts/site-info';
 import NavBar from '../components/shared/NavBar.astro';
+
+interface Props {
+	title?: string;
+	image?: string;
+	description?: string;
+}
+
+const { title = siteInfo.title, description = siteInfo.description, image } = Astro.props;
 ---
 
 <html lang="en">
@@ -22,7 +22,7 @@ import NavBar from '../components/shared/NavBar.astro';
 		<meta name="generator" content={Astro.generator} />
 
 		<meta name="description" content={description}>
-		<meta name="author" content="{'Emiliano Batres'}">
+		<meta name="author" content="Emiliano Batres">
 		<meta property="og:title" content={title}>
 		<meta name="og:description" content={description}>
 		<meta property ="og:image" content={image}>
@@ -33,7 +33,7 @@ import NavBar from '../components/shared/NavBar.astro';
 	<body class="bg-slate-800 text-slate-100">
 
 		<NavBar />
-		<main class="mt-10 m-auto max-w-3xl mx-4">
+		<main class="mt-10 mx-auto max-w-3xl">
 			<slot />
 		</main>
 	</body>
